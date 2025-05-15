@@ -36,13 +36,13 @@ Route::post('/resend-otp', [OtpController::class, 'resendOtp'])
 //     ->where('provider', 'google|apple')
 //     ->middleware('guest');
 
-Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
-    ->middleware(['guest','ResetPasswordMiddleware'])
-    ->name('password.store');
+// Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
+//     ->middleware(['guest','ResetPasswordMiddleware'])
+//     ->name('password.store');
 
-Route::post('/verify-otp', [VerifyOtpController::class, 'verify'])
-    ->middleware(['VerifyOtpMiddleware','throttle:6,1']) // Limit OTP attempts to 6 per minute
-    ->name('verification.verify');
+// Route::post('/verify-otp', [VerifyOtpController::class, 'verify'])
+//     ->middleware(['VerifyOtpMiddleware','throttle:6,1']) // Limit OTP attempts to 6 per minute
+//     ->name('verification.verify');
 
 // Route::post('/resend-otp', [OtpController::class, 'resendOtp'])
 //     ->middleware(['SendOtpMiddleware','auth:sanctum', 'signed', 'throttle:6,1']);
