@@ -21,20 +21,20 @@ Route::get('/send-test-email', function () {
     return response()->json(['message' => 'Test email sent successfully!']);
 });
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware(['guest','RegisterMiddleware'])
-    ->name('register');
+// Route::post('/register', [RegisteredUserController::class, 'store'])
+//     ->middleware(['guest','RegisterMiddleware'])
+//     ->name('register');
 
-Route::post('/login', [LoginController::class, 'store'])
-    ->middleware(['guest','LoginMiddleware'])
-    ->name('login');
+// Route::post('/login', [LoginController::class, 'store'])
+//     ->middleware(['guest','LoginMiddleware'])
+//     ->name('login');
 
 Route::post('/resend-otp', [OtpController::class, 'resendOtp'])
     ->middleware(['guest','SendOtpMiddleware', 'throttle:6,1']);
 
-Route::post('/auth/{provider}/login', [SocialLoginController::class, 'login'])
-    ->where('provider', 'google|apple')
-    ->middleware('guest');
+// Route::post('/auth/{provider}/login', [SocialLoginController::class, 'login'])
+//     ->where('provider', 'google|apple')
+//     ->middleware('guest');
 
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
     ->middleware(['guest','ResetPasswordMiddleware'])
