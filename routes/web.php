@@ -28,9 +28,9 @@ Route::get('/register', function () {
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin|employee'])->group(function () {    // Product Routes
-    Route::get('/', function () {
-        return redirect()->route('admin.products');
-    });
+    // Route::get('/', function () {
+    //     return redirect()->route('admin.products');
+    // });
     Route::get('/products', [ProductController::class, 'index'])->middleware('permission:view products')->name('admin.products');
     Route::get('/product/create', [ProductController::class, 'create'])->middleware('permission:create products')->name('admin.create.product');
     Route::get('/product/{id}', [ProductController::class, 'show'])->middleware('permission:manage products')->name('admin.product.show');
