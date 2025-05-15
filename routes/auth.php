@@ -50,6 +50,6 @@ Route::post('/resend-otp', [OtpController::class, 'resendOtp'])
 //     ->middleware(['auth:sanctum', 'throttle:6,1'])
 //     ->name('verification.send');
 
-Route::post('/logout', [LoginController::class, 'destroy'])
-    ->middleware('auth:sanctum')
-    ->name('logout');
+// Route::post('/logout', [LoginController::class, 'destroy'])
+//     ->middleware('auth:sanctum')
+//     ->name('logout');
