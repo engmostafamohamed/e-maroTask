@@ -1,3 +1,4 @@
+# .github/workflows/deploy.yml
 name: Deploy Laravel 11 to AWS Elastic Beanstalk
 
 on:
@@ -10,20 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Setup PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, ctype, fileinfo, openssl, tokenizer, xml, gd, pdo_mysql
 
+      # Install Composer dependencies
       - name: Install Composer dependencies
         run: |
           composer install --no-dev --optimize-autoloader
 
-      - name: Laravel Setup
+      # Ensure Laravel directories exist and have correct permissions
+      - name: Fix Laravel permissions
+        run: |
+          mkdir -p storage/framework/{cache,sessions,views}
+          mkdir -p storage/logs
+          mkdir -p bootstrap/cache
+          chmod -R 775 storage bootstrap/cache
+
+      # Laravel cache setup
+      - name: Laravel Cache Setup
         run: |
           php artisan config:clear
           php artisan route:clear
@@ -32,17 +45,12 @@ jobs:
           php artisan route:cache
           php artisan view:cache
 
-      - name: Ensure Laravel directories exist and have correct permissions
-        run: |
-          mkdir -p storage/framework/views
-          mkdir -p storage/framework/cache
-          mkdir -p storage/logs
-          chmod -R 775 storage bootstrap/cache
-
+      # Zip the app (exclude unnecessary files)
       - name: Zip the app
         run: |
           zip -r app.zip . -x '*.git*' '*.github*' 'tests/*' 'node_modules/*' 'storage/logs/*' 'vendor/bin/*'
 
+      # Deploy to AWS Elastic Beanstalk
       - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
