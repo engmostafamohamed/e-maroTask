@@ -24,5 +24,4 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //     Route::delete('/category/{id}', [CategoryController::class, 'delete_product'])->name('admin.category.delete');
 
 // });
-
 require __DIR__.'/auth.php';
